@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lembretes NYC Digital
 
-## Getting Started
+App de lembretes com login para 2 usuários (você e seu chefe). Lembretes podem ser
+pessoais (um cria para o outro ou para si) ou da empresa (visíveis para os dois).
 
-First, run the development server:
+Stack: Next.js (App Router) + Neon Postgres + cookie de sessão assinado (sem libs de auth).
+
+## 1. Criar o banco no Neon
+
+1. Crie um projeto em https://neon.tech
+2. Copie a connection string (formato `postgres://user:pass@host/db?sslmode=require`)
+3. No SQL editor do Neon, rode o conteúdo de [`schema.sql`](schema.sql)
+
+## 2. Configurar variáveis de ambiente
+
+Copie `.env.example` para `.env.local` e preencha:
+
+```
+DATABASE_URL=postgres://...
+SESSION_SECRET=qualquer-string-aleatoria-longa
+```
+
+## 3. Criar os dois usuários
+
+```bash
+npm install
+DATABASE_URL="sua-connection-string" node scripts/create-user.mjs joao "senha-forte" "João"
+DATABASE_URL="sua-connection-string" node scripts/create-user.mjs chefe "outra-senha" "Nome do Chefe"
+```
+
+(sem `DATABASE_URL` no ambiente, o script só imprime o SQL para você colar manualmente)
+
+## 4. Rodar localmente
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 5. Deploy na Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Suba este repositório para o GitHub
+2. Importe o repo em https://vercel.com/new
+3. Em Settings → Environment Variables, adicione `DATABASE_URL` e `SESSION_SECRET`
+4. Deploy
