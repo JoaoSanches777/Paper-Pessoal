@@ -78,6 +78,20 @@ export function Sidebar({
         </button>
       </div>
 
+      <div className="px-2 py-3 border-b border-slate-200 dark:border-slate-700 space-y-1">
+        <ThemeToggle colapsada={colapsada} />
+        <button
+          onClick={onLogout}
+          title={colapsada ? "Sair" : undefined}
+          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 ${
+            colapsada ? "justify-center" : ""
+          }`}
+        >
+          <IconeSair />
+          {!colapsada && "Sair"}
+        </button>
+      </div>
+
       <nav className="flex-1 px-2 py-3 space-y-1">
         {ITEMS.map((item) => {
           const active = view === item.key;
@@ -97,20 +111,6 @@ export function Sidebar({
           );
         })}
       </nav>
-
-      <div className="px-2 py-3 border-t border-slate-200 dark:border-slate-700 space-y-1">
-        <ThemeToggle colapsada={colapsada} />
-        <button
-          onClick={onLogout}
-          title={colapsada ? "Sair" : undefined}
-          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 ${
-            colapsada ? "justify-center" : ""
-          }`}
-        >
-          <IconeSair />
-          {!colapsada && "Sair"}
-        </button>
-      </div>
     </aside>
     </>
   );
