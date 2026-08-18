@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AccountModal } from "@/components/AccountModal";
 
 export type View = "lembretes-trabalho" | "lembretes-pessoal" | "calendario" | "anotacoes" | "arquivos";
 
@@ -29,6 +30,7 @@ export function Sidebar({
   onToggleColapsada: () => void;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contaAberta, setContaAberta] = useState(false);
 
   function selecionar(v: View) {
     onChange(v);
@@ -78,20 +80,6 @@ export function Sidebar({
         </button>
       </div>
 
-      <div className="px-2 py-3 border-b border-slate-200 dark:border-slate-700 space-y-1">
-        <ThemeToggle colapsada={colapsada} />
-        <button
-          onClick={onLogout}
-          title={colapsada ? "Sair" : undefined}
-          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 ${
-            colapsada ? "justify-center" : ""
-          }`}
-        >
-          <IconeSair />
-          {!colapsada && "Sair"}
-        </button>
-      </div>
-
       <nav className="flex-1 px-2 py-3 space-y-1">
         {ITEMS.map((item) => {
           const active = view === item.key;
@@ -111,7 +99,34 @@ export function Sidebar({
           );
         })}
       </nav>
+
+      <div className="px-2 py-3 border-t border-slate-200 dark:border-slate-700 space-y-1">
+        <ThemeToggle colapsada={colapsada} />
+        <button
+          type="button"
+          onClick={() => setContaAberta(true)}
+          title={colapsada ? "Conta" : undefined}
+          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 ${
+            colapsada ? "justify-center" : ""
+          }`}
+        >
+          <IconeConta />
+          {!colapsada && "Conta"}
+        </button>
+        <button
+          onClick={onLogout}
+          title={colapsada ? "Sair" : undefined}
+          className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 ${
+            colapsada ? "justify-center" : ""
+          }`}
+        >
+          <IconeSair />
+          {!colapsada && "Sair"}
+        </button>
+      </div>
     </aside>
+
+    {contaAberta && <AccountModal onClose={() => setContaAberta(false)} />}
     </>
   );
 }
@@ -172,6 +187,15 @@ function IconeColapsar({ colapsada }: { colapsada: boolean }) {
       className={`transition-transform ${colapsada ? "rotate-180" : ""}`}
     >
       <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconeConta() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21c0-4 4-6 8-6s8 2 8 6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

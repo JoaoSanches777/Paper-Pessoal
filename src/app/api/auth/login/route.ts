@@ -7,7 +7,8 @@ const MAX_ATTEMPTS = 5;
 const LOCKOUT_MINUTES = 15;
 
 export async function POST(req: NextRequest) {
-  const { username, password } = await req.json();
+  const { username: rawUsername, password } = await req.json();
+  const username = rawUsername?.trim();
   if (!username || !password) {
     return NextResponse.json({ error: "Usuário e senha são obrigatórios" }, { status: 400 });
   }
