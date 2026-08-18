@@ -1273,7 +1273,7 @@ function ReminderCard({
   }
 
   const accentColor = r.category_color ?? "#e2e8f0";
-  const tintBg = r.category_color ? `${r.category_color}12` : "#ffffff";
+  const tintBg = r.category_color ? `${r.category_color}12` : undefined;
 
   return (
     <>
@@ -1454,8 +1454,8 @@ function ReminderCard({
       onDrop={onDropOn}
       style={{ backgroundColor: tintBg, borderLeftColor: accentColor }}
       className={`border border-l-4 border-slate-200 dark:border-slate-700 rounded-xl shadow-sm px-4 py-3 flex items-start gap-3 transition-opacity ${
-        dragging ? "opacity-40" : ""
-      } ${highlighted ? "ring-2 ring-amber-400 ring-offset-2" : ""}`}
+        tintBg ? "" : "bg-white dark:bg-slate-800"
+      } ${dragging ? "opacity-40" : ""} ${highlighted ? "ring-2 ring-amber-400 ring-offset-2" : ""}`}
     >
       <span
         className="hidden sm:block mt-1.5 text-slate-300 dark:text-slate-600 cursor-grab active:cursor-grabbing select-none"

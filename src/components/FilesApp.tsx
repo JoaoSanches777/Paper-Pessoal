@@ -217,7 +217,7 @@ export default function FilesApp() {
               multiple
               disabled={uploading}
               onChange={(e) => handleUpload(e.target.files)}
-              className="block w-full text-sm text-slate-600 dark:text-slate-300 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 dark:bg-slate-800 file:px-3 file:py-2 file:text-sm file:font-medium hover:file:bg-slate-200 dark:bg-slate-700"
+              className="block w-full text-sm text-slate-600 dark:text-slate-300 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 dark:file:bg-slate-700 file:px-3 file:py-2 file:text-sm file:font-medium file:text-slate-700 dark:file:text-slate-200 hover:file:bg-slate-200 dark:hover:file:bg-slate-600"
             />
             <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
               Até 4MB por arquivo{uploading && " · enviando..."}
