@@ -10,14 +10,6 @@ import FilesApp from "@/components/FilesApp";
 
 const CHAVE_LOCALSTORAGE = "sidebar-colapsada";
 
-const TAB_TITLES: Record<View, string> = {
-  "lembretes-trabalho": "Lembretes Trabalho",
-  "lembretes-pessoal": "Lembretes Pessoal",
-  calendario: "Calendário Pessoal",
-  anotacoes: "Anotações Pessoais",
-  arquivos: "Arquivos",
-};
-
 export default function AppShell() {
   const router = useRouter();
   const [view, setView] = useState<View>("lembretes-trabalho");
@@ -29,13 +21,6 @@ export default function AppShell() {
       .then((r) => r.json())
       .then((me) => setUserName(me.name?.split(" ")[0] ?? ""));
   }, []);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      document.title = TAB_TITLES[view];
-    }, 100);
-    return () => clearTimeout(id);
-  }, [view]);
 
   useEffect(() => {
     if (localStorage.getItem(CHAVE_LOCALSTORAGE) === "1") setColapsada(true);
