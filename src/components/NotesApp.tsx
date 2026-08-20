@@ -432,6 +432,11 @@ function NoteEditor({ note, onDelete, onSaved }: { note: Note; onDelete: () => v
   const imageInputRef = useRef<HTMLInputElement>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    if (editorRef.current) editorRef.current.innerHTML = note.content;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function scheduleSave(patch: Record<string, unknown>) {
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
@@ -628,7 +633,6 @@ function NoteEditor({ note, onDelete, onSaved }: { note: Note; onDelete: () => v
         contentEditable
         suppressContentEditableWarning
         onInput={handleContentInput}
-        dangerouslySetInnerHTML={{ __html: note.content }}
         className="flex-1 px-6 pb-6 text-sm text-slate-800 dark:text-slate-100 focus:outline-none overflow-y-auto"
         style={{ fontFamily: fontFamilyFor(font) }}
       />
